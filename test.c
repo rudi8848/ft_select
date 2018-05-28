@@ -2,8 +2,20 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <termios.h>
+#include <signal.h>
+#include <stdlib.h>
 
 static struct termios cpy;
+static int g_fd;
+	
+void	handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		tcsetattr(g_fd, TCSAFLUSH, &cpy);
+		exit (0);
+	}
+}
 
 int		main(int argc, char **argv)
 {
@@ -12,9 +24,9 @@ int		main(int argc, char **argv)
 	char *str = NULL;
 	char *name;
 	struct termios buf;
-
-	char rb[100];
 	int rr;
+	char rb[100];
+
 	fd = 0;
 
 
@@ -25,6 +37,12 @@ name = ctermid(str);
 
 //get the fd of terminal
 fd = open(name, O_RDONLY);
+if (fd < 0)
+{
+	perror("open");
+	return (-1);
+}
+g_fd = fd;
 printf("ctermid:	%s, [%d]\n", name, fd);
 // is fd a terminal?
 printf("isatty:		[%s]\n", isatty(fd) ? "YES" : "NO");
@@ -63,7 +81,7 @@ if (tcgetattr(fd, &buf) < 0)
 	perror("tcsetattr2");
 	return (-1);
 }
-
+signal(SIGINT, handler);
 //считываем
 while ((rr = read(fd, &rb, 100)) > 0)
 {
