@@ -4,6 +4,8 @@
 #include <termios.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <curses.h>
+#include <term.h>
 
 static struct termios cpy;
 static int g_fd;
@@ -27,13 +29,16 @@ int		main(int argc, char **argv)
 	struct termios buf;
 	int rr;
 	char rb[100];
-
+	char bp[1024];
 	fd = 0;
 
 printf("\033[7mReversed\033[m Normal\n");		//reversed
 printf("\033[4mUnderlined\033[m Normal\n");		//underlined
 printf("\033[7;4mRev+Underlined\033[m Normal\n");	//both
 
+ret = tgetent(bp, "co");
+printf("[%s]\n", ret ? "YES" : "NO");
+/*
 // get a name of terminal
 name = ctermid(str);
 
@@ -116,5 +121,6 @@ fd = 0;
 		fd++;
 	}
 close(fd);
+*/
 	return (0);
 }
