@@ -39,8 +39,8 @@ printf("\033[7mReversed\033[m Normal\n");		//reversed
 printf("\033[4mUnderlined\033[m Normal\n");		//underlined
 printf("\033[7;4mRev+Underlined\033[m Normal\n");	//both
 
-ret = tgetent(bp, "co");
-printf("[%s]\n", ret ? "YES" : "NO");
+//ret = tgetent(bp, "co");
+//printf("[%s]\n", ret ? "YES" : "NO");
 
 // get a name of terminal
 name = ctermid(str);
@@ -55,9 +55,9 @@ if (fd < 0)
 }
 g_fd = fd;
 
-ret = ioctl(fd, TIOCGLCKTRMIOS, &argp);
-printf("ret ioctl: %d\n", ret); 
-/*
+//ret = ioctl(fd, TIOCGLCKTRMIOS, &argp);
+//printf("ret ioctl: %d\n", ret); 
+
 printf("ctermid:	%s, [%d]\n", name, fd);
 // is fd a terminal?
 printf("isatty:		[%s]\n", isatty(fd) ? "YES" : "NO");
@@ -101,8 +101,9 @@ signal(SIGINT, handler);
 while ((rr = read(fd, &rb, 100)) > 0)
 {
 	rb[rr] = '\0';
-	//printf("---> rr: %d, rb: %s %d\n", rr, rb, rb[0]);
-	if (rr > 1)
+	
+	
+	if (rr > 0)
 	{
 		int i = 0;
 		while (i < rr)
@@ -128,6 +129,6 @@ fd = 0;
 		fd++;
 	}
 close(fd);
-*/
+
 	return (0);
 }

@@ -55,9 +55,9 @@ if (fd < 0)
 }
 g_fd = fd;
 
-ret = ioctl(fd, TIOCGLCKTRMIOS, &argp);
-printf("ret ioctl: %d\n", ret); 
-/*
+//ret = ioctl(fd, TIOCGLCKTRMIOS, &argp);
+//printf("ret ioctl: %d\n", ret); 
+
 printf("ctermid:	%s, [%d]\n", name, fd);
 // is fd a terminal?
 printf("isatty:		[%s]\n", isatty(fd) ? "YES" : "NO");
@@ -128,6 +128,6 @@ fd = 0;
 		fd++;
 	}
 close(fd);
-*/
+
 	return (0);
 }
