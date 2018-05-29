@@ -17,6 +17,7 @@ void	handler(int signum)
 	}
 }
 
+
 int		main(int argc, char **argv)
 {
 	int fd;
@@ -29,7 +30,9 @@ int		main(int argc, char **argv)
 
 	fd = 0;
 
-
+printf("\033[7mReversed\033[m Normal\n");		//reversed
+printf("\033[4mUnderlined\033[m Normal\n");		//underlined
+printf("\033[7;4mRev+Underlined\033[m Normal\n");	//both
 
 // get a name of terminal
 name = ctermid(str);
@@ -56,7 +59,7 @@ if (tcgetattr(fd, &buf) < 0)
 	perror("tcgetattr");
 	return(-1);
 }
-//делаем копию, чтобы все вернуть взад
+//делаем копию, чтобы вернуть все взад
 cpy = buf;
 
 //устанавливаем неканоничный режим и отключаем эхо
