@@ -1,5 +1,5 @@
 NAME = ft_select
-SRCS = list.c
+SRCS = list.c keys.c
 LIB = libft/libft.a
 OBJ = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror

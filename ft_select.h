@@ -28,18 +28,17 @@
 # define S_CRSR		"\033[4m"
 # define S_SLCRS		"\033[7;4m"
 
-/*
-#define K_LEFT
-#define K_RIGHT
-#define K_UP
-#define K_DOWN
 
-#define K_ENTER
-#define K_SPACE
-#define K_ESC
-#define K_DELETE
-#define K_BSPACE
-*/
+#define K_LEFT		4479771
+#define K_RIGHT		4414235
+#define K_UP		4283163
+#define K_DOWN		4348699
+
+#define K_ENTER		10
+#define K_SPACE 	32
+#define K_ESC		27
+#define K_DELETE	2117294875L
+#define K_BSPACE	127
 
 typedef struct s_dslist
 {
@@ -49,5 +48,14 @@ typedef struct s_dslist
 	struct  s_dslist *prev;
 	struct  s_dslist *next;
 } t_dslist;
+
+t_dslist	*ft_init_list(char *name);
+t_dslist	*ft_addelem(t_dslist *lst, char *name);
+t_dslist	*ft_del_elem(t_dslist *lst);
+void		ft_del_list(t_dslist *lst);
+
+
+
+void	ft_print_forward(t_dslist *lst);
 
 #endif

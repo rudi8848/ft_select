@@ -47,7 +47,7 @@ t_dslist	*ft_addelem(t_dslist *lst, char *name)
 
 t_dslist	*ft_del_elem(t_dslist *lst)
 {
-	printf("del: %s\n", lst->name);
+	//printf("del: %s\n", lst->name);
 	t_dslist	*prev;
 	t_dslist	*next;
 
@@ -64,11 +64,11 @@ void	ft_print_forward(t_dslist *lst)
 	t_dslist	*ptr;
 
 	ptr = lst;
-	ft_printf("%s [%d]\n", ptr->name, ptr->len);
+	ft_printf("%s%s%s\n", ptr->modes ? S_CRSR : "", ptr->name, S_NORM);
 	ptr = lst->next;
 	while (ptr != lst)
 	{
-		ft_printf("%s [%d]\n", ptr->name, ptr->len);
+		ft_printf("%s%s%s\n", ptr->modes ? S_CRSR : "", ptr->name, S_NORM);
 		ptr = ptr->next;
 	}
 }
@@ -86,6 +86,7 @@ void	ft_del_list(t_dslist *lst)
 	ft_del_elem(lst);
 }
 
+/*
 int		main(int argc, char **argv)
 {
 	t_dslist *new;
@@ -106,3 +107,4 @@ int		main(int argc, char **argv)
 	}
 	return 0;
 }
+*/
