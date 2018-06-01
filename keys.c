@@ -14,6 +14,24 @@
 
 struct termios cpy;
 
+void		ft_print_selected(t_dslist *lst)
+{
+	t_dslist *ptr;
+
+	ptr = lst;
+	system("clear");
+	if (ptr->modes & M_SLCT)
+		ft_printf("%s ", ptr->name);
+	ptr = ptr->next;
+	while (ptr != lst)
+	{
+		if (ptr->modes & M_SLCT)
+			ft_printf("%s ", ptr->name);
+		ptr = ptr->next;
+	}
+	ft_putchar('\n');
+}
+
 t_dslist	*ft_loop(t_dslist *lst)
 {
 	int fd;
@@ -72,27 +90,34 @@ system("clear");
 ft_print_forward(lst);
 	while ((rr = read(fd, &rb, 8)) > 0)
 	{
-	//ft_printf("[ %lld ]\n", rb);
-	if (rb == K_DOWN)
-	{
-		ptr->modes = 0;
-		ptr = ptr->next;
-		ptr->modes = 1;
-	}
-	else if (rb == K_UP)
-	{
-		ptr->modes = 0;
-		ptr = ptr->prev;
-		ptr->modes = 1;
-	}
-	else if ((int)rb == 10)
-	{
-
-		return lst;
-	}
-	system("clear");
-	ft_print_forward(lst);
-	rb = 0;
+		//ft_printf("[ %lld ]\n", rb);
+		if (rb == K_DOWN)
+		{
+			ptr->modes &= ~(M_CRSR);
+			ptr = ptr->next;
+			ptr->modes |= (M_CRSR);
+		}
+		else if (rb == K_UP)
+		{
+			ptr->modes &= ~(M_CRSR);
+			ptr = ptr->prev;
+			ptr->modes |= (M_CRSR);
+		}
+		else if (rb == K_SPACE)
+		{
+			if (! (ptr->modes & M_SLCT))
+				ptr->modes |= M_SLCT;
+			else
+				ptr->modes &= ~(M_SLCT);
+		}
+		else if ((int)rb == K_ENTER)
+		{
+			ft_print_selected(lst);
+			return lst;
+		}
+		system("clear");
+		ft_print_forward(lst);
+		rb = 0;
 	}
 }
 
@@ -111,7 +136,7 @@ int		main(int argc, char **argv)
 		}
 		new = new->next;
 
-		new->modes = 1;
+		new->modes |= M_CRSR;
 
 		new = ft_loop(new);
 		
