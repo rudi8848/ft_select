@@ -1,38 +1,4 @@
-#include "libft/includes/libft.h"
-#include "libft/includes/ft_printf.h"
-#include <sys/ioctl.h>
-#include <termios.h>
-#include <fcntl.h>
-
-#define M_NORM		0
-#define M_SLCT		1
-#define M_CRSR		2
-
-#define S_NORM		"\033[0m"
-#define S_SLCT		"\033[7m"
-#define S_CRSR		"\033[4m"
-#define S_SLCRS		"\033[7;4m"
-
-/*
-#define K_LEFT
-#define K_RIGHT
-#define K_UP
-#define K_DOWN
-
-#define K_ENTER
-#define K_SPACE
-#define K_ESC
-#define K_DELETE
-#define K_BSPACE
-*/
-
-typedef struct s_slist
-{
-	char	*name;
-	size_t	len;
-	int		modes;
-	struct  s_slist *next;
-} t_slist;
+#include "ft_select.h"
 
 void			ft_print_columns(t_slist *head, int total, int c, int r);
 

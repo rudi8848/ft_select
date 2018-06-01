@@ -1,9 +1,9 @@
 NAME = ft_select
-SRCS = select.c
+SRCS = list.c
 LIB = libft/libft.a
 OBJ = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
-#HDRS = minishell.h libft/includes/ft_printf.h libft/includes/get_next_line.h libft/includes/libft.h
+
 all:	$(NAME)
 
 $(NAME): $(OBJ) $(LIB) $(HDRS)
