@@ -12,14 +12,12 @@
 
 #include "ft_select.h"
 
-struct termios cpy;
-
 void		ft_print_selected(t_dslist *lst)
 {
 	t_dslist *ptr;
 
 	ptr = lst;
-	system("clear");
+	ft_printf("%s", CLEAR);
 	if (ptr->modes & M_SLCT)
 		ft_printf("%s ", ptr->name);
 	ptr = ptr->next;
@@ -58,7 +56,7 @@ if (tcgetattr(fd, &buf) < 0)
 	//return(-1);
 }
 //делаем копию, чтобы вернуть все взад
-cpy = buf;
+g_cpattr = buf;
 
 //устанавливаем неканоничный режим и отключаем эхо
 buf.c_lflag &= ~(ECHO | ICANON);
@@ -79,14 +77,14 @@ if (tcsetattr(fd, TCSAFLUSH, &buf) < 0)
 if (tcgetattr(fd, &buf) < 0)
 {
 	perror("tcgetattr2");
-	tcsetattr(fd, TCSAFLUSH, &cpy);
+	tcsetattr(fd, TCSAFLUSH, &g_cpattr);
 	perror("tcsetattr2");
 	exit (0);
 	//return (-1);
 }
 rb = 0;
 t_dslist *ptr = lst;
-system("clear");
+ft_printf("%s", CLEAR);
 ft_print_forward(lst);
 	while ((rr = read(fd, &rb, 8)) > 0)
 	{
@@ -110,12 +108,18 @@ ft_print_forward(lst);
 			else
 				ptr->modes &= ~(M_SLCT);
 		}
+		else if (rb == K_DELETE || rb == K_BSPACE)
+		{
+			if (ptr != lst)
+				ptr = ft_del_elem(ptr);
+			ptr->modes |= (M_CRSR);
+		}
 		else if ((int)rb == K_ENTER)
 		{
 			ft_print_selected(lst);
 			return lst;
 		}
-		system("clear");
+		ft_printf("%s", CLEAR);
 		ft_print_forward(lst);
 		rb = 0;
 	}
@@ -125,6 +129,7 @@ int		main(int argc, char **argv)
 {
 	int i = 1;
 	t_dslist *new;
+
 	if (argc > 1)
 	{
 		new = ft_init_list(argv[i]);
@@ -135,13 +140,12 @@ int		main(int argc, char **argv)
 			i++;
 		}
 		new = new->next;
-
 		new->modes |= M_CRSR;
-
 		new = ft_loop(new);
-		
-		
 		ft_del_list(new);
 	}
+	else
+		ft_printf("No args\n");
+	test_termcap();
 	return 0;
 }

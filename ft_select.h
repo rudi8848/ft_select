@@ -18,6 +18,8 @@
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <fcntl.h>
+#include <curses.h>
+#include <term.h>
 
 # define M_NORM		0
 # define M_SLCT		1
@@ -26,8 +28,8 @@
 # define S_NORM		"\033[0m"
 # define S_SLCT		"\033[7m"
 # define S_CRSR		"\033[4m"
-# define S_SLCRS		"\033[7;4m"
-
+# define S_SLCRS	"\033[7;4m"
+# define CLEAR		"\033[1;1H\e[2J"
 
 #define K_LEFT		4479771
 #define K_RIGHT		4414235
@@ -39,6 +41,8 @@
 #define K_ESC		27
 #define K_DELETE	2117294875L
 #define K_BSPACE	127
+
+struct termios g_cpattr;
 
 typedef struct s_dslist
 {
@@ -55,7 +59,6 @@ t_dslist	*ft_del_elem(t_dslist *lst);
 void		ft_del_list(t_dslist *lst);
 
 
-
 void	ft_print_forward(t_dslist *lst);
-
+void		test_termcap(void);
 #endif

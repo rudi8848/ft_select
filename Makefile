@@ -1,15 +1,16 @@
 NAME = ft_select
-SRCS = list.c keys.c
+SRCS = list.c keys.c signals.c exit.c termcap.c
 LIB = libft/libft.a
 OBJ = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -ltermcap
+HDRS = ft_select.h
 
 all:	$(NAME)
 
 $(NAME): $(OBJ) $(LIB) $(HDRS)
-	gcc -o $(NAME) $(FLAGS) $(OBJ) -L. $(LIB)
+	gcc -o $(NAME) $(CFLAGS) $(OBJ) -L. $(LIB)
 
-$(OBJ):	$(SRCS) $(LIB)
+$(OBJ):	$(SRCS) $(LIB) $(HDRS)
 	gcc -c $(SRCS) -g3
 
 $(LIB):
