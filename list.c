@@ -93,56 +93,34 @@ t_dslist	*ft_del_elem(t_dslist *lst)
 	return (prev);
 }
 
+void	ft_print_elem(t_dslist *ptr)
+{
+	ft_putstr_fd(ptr->color, STDERR_FILENO);
+	if (ptr->modes & M_CRSR && ptr->modes & M_SLCT)
+		ft_putstr_fd(S_SLCRS, STDERR_FILENO);
+		//ft_printf("%s%s%s\n", S_SLCRS, ptr->name, S_NORM);
+	else if (ptr->modes & M_CRSR)
+		ft_putstr_fd(S_CRSR, STDERR_FILENO);
+		//ft_printf("%s%s%s\n", S_CRSR, ptr->name, S_NORM);
+	else if (ptr->modes & M_SLCT)
+		ft_putstr_fd(S_SLCT, STDERR_FILENO);
+		//ft_printf("%s%s%s\n", S_SLCT, ptr->name, S_NORM);
+	//else
+		ft_putstr_fd(ptr->name, STDERR_FILENO);
+		ft_putstr_fd(S_NORM, STDERR_FILENO);
+}
+
 void	ft_print_forward(t_dslist *lst)
 {
 	t_dslist	*ptr;
 
 	ptr = lst;
-		ft_putstr_fd(ptr->color, STDERR_FILENO);
-	if (ptr->modes & M_CRSR && ptr->modes & M_SLCT)
-		ft_putstr_fd(S_SLCRS, STDERR_FILENO);
-		//ft_printf("%s%s%s\n", S_SLCRS, ptr->name, S_NORM);
-	else if (ptr->modes & M_CRSR)
-		ft_putstr_fd(S_CRSR, STDERR_FILENO);
-		//ft_printf("%s%s%s\n", S_CRSR, ptr->name, S_NORM);
-	else if (ptr->modes & M_SLCT)
-		ft_putstr_fd(S_SLCT, STDERR_FILENO);
-		//ft_printf("%s%s%s\n", S_SLCT, ptr->name, S_NORM);
-	//else
-		ft_putstr_fd(ptr->name, STDERR_FILENO);
-		ft_putstr_fd(S_NORM, STDERR_FILENO);
-		//ft_printf("%s\n", ptr->name);
-		//ft_printf("%s%s%s\n", (ptr->modes & M_CRSR)  ? S_CRSR : "", ptr->name, S_NORM);
-
+		
+	ft_print_elem(ptr);
 	ptr = lst->next;
 	while (ptr != lst)
 	{
-		/*
-		if (ptr->modes & M_CRSR && ptr->modes & M_SLCT)
-			ft_printf("%s%s%s\n", S_SLCRS, ptr->name, S_NORM);
-		else if (ptr->modes & M_CRSR)
-			ft_printf("%s%s%s\n", S_CRSR, ptr->name, S_NORM);
-		else if (ptr->modes & M_SLCT)
-			ft_printf("%s%s%s\n", S_SLCT, ptr->name, S_NORM);
-		else
-			ft_printf("%s\n", ptr->name);
-		//ft_printf("%s%s%s\n", (ptr->modes & M_CRSR) ? S_CRSR : "", ptr->name, S_NORM);*/
-		ft_putstr_fd(ptr->color, STDERR_FILENO);
-	if (ptr->modes & M_CRSR && ptr->modes & M_SLCT)
-		ft_putstr_fd(S_SLCRS, STDERR_FILENO);
-		//ft_printf("%s%s%s\n", S_SLCRS, ptr->name, S_NORM);
-	else if (ptr->modes & M_CRSR)
-		ft_putstr_fd(S_CRSR, STDERR_FILENO);
-		//ft_printf("%s%s%s\n", S_CRSR, ptr->name, S_NORM);
-	else if (ptr->modes & M_SLCT)
-		ft_putstr_fd(S_SLCT, STDERR_FILENO);
-		//ft_printf("%s%s%s\n", S_SLCT, ptr->name, S_NORM);
-	//else
-		ft_putstr_fd(ptr->name, STDERR_FILENO);
-		ft_putstr_fd(S_NORM, STDERR_FILENO);
-		//ft_printf("%s\n", ptr->name);
-		//ft_printf("%s%s%s\n", (ptr->modes & M_CRSR)  ? S_CRSR : "", ptr->name, S_NORM);
-
+		ft_print_elem(ptr);
 		ptr = ptr->next;
 	}
 }
