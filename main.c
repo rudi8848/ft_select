@@ -11,7 +11,7 @@ void	ft_check_terminal(void)
 		ft_putstr_fd("Terminal is not set\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	ret = tgetent(NULL, NAME);
+	ret = tgetent(NULL, name);
 	if (ret < 1)
 	{
 		ft_putstr_fd("No settings for terminal\n", STDERR_FILENO);
@@ -43,8 +43,7 @@ void	ft_init_attr(void)
 	if (tcgetattr(STDIN_FILENO, &buf) < 0)
 	{
 		perror("tcgetattr");
-		ft_restore_settings();
-		exit(EXIT_FAILURE);
+		ft_exit();
 	}
 	g_attr.cur_settings = buf;
 }
@@ -70,7 +69,7 @@ void	ft_get_args(int argc, char **argv)
 	g_attr.args->modes |= M_CRSR;
 }
 
-int		main(int argc, char argv)
+int		main(int argc, char **argv)
 {
 	if (argc > 1)
 	{
@@ -79,9 +78,11 @@ int		main(int argc, char argv)
 		ft_set_signals();
 		ft_get_args(argc, argv);
 		ft_processing();
+	ft_restore_settings();
+	ft_del_list(g_attr.args);
 	}
 	else
 		ft_putstr_fd("Usage: ./ft_select <arguments>\n", STDERR_FILENO);
-	ft_restore_settings();
+	
 	return (0);
 }

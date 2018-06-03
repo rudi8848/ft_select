@@ -12,4 +12,9 @@
 
 #include "ft_select.h"
 
-
+void	ft_exit(void)
+{
+	ft_restore_settings();
+	ft_del_list(g_attr.args);
+	exit(EXIT_SUCCESS);
+}

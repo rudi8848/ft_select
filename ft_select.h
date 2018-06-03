@@ -20,6 +20,7 @@
 # include <fcntl.h>
 #include <curses.h>
 #include <term.h>
+#include <signal.h>
 
 # define M_NORM		0
 # define M_SLCT		1
@@ -42,14 +43,8 @@
 #define K_DELETE	2117294875L
 #define K_BSPACE	127
 
-t_data	g_attr;
 
-typedef struct s_data
-{
-	struct termios def_settings;
-	struct termios cur_settings;
-	t_dslist *args;
-} t_data;
+
 
 typedef struct s_dslist
 {
@@ -60,13 +55,22 @@ typedef struct s_dslist
 	struct  s_dslist *next;
 } t_dslist;
 
+typedef struct s_data
+{
+	struct termios def_settings;
+	struct termios cur_settings;
+	t_dslist *args;
+} t_data;
+
+t_data	g_attr;
 t_dslist	*ft_init_list(char *name);
 t_dslist	*ft_addelem(t_dslist *lst, char *name);
 t_dslist	*ft_del_elem(t_dslist *lst);
 void		ft_del_list(t_dslist *lst);
 void		ft_set_signals(void);
 void		ft_restore_settings(void);
-
+void		ft_processing(void);
+void		ft_exit(void);
 
 void	ft_print_forward(t_dslist *lst);
 void		test_termcap(void);

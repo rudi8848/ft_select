@@ -5,7 +5,8 @@ void		ft_print_selected(t_dslist *lst)
 	t_dslist *ptr;
 
 	ptr = lst;
-	ft_printf("%s", CLEAR);
+//	ft_printf("%s", CLEAR);
+ft_putstr_fd(CLEAR, STDERR_FILENO);
 	if (ptr->modes & M_SLCT)
 		ft_printf("%s ", ptr->name);
 	ptr = ptr->next;
@@ -20,10 +21,13 @@ void		ft_print_selected(t_dslist *lst)
 
 void	ft_processing(void)
 {
+	int rr;
+	uint64_t rb;
 	t_dslist *ptr = g_attr.args;
-ft_printf("%s", CLEAR);
-ft_print_forward(g_attr.args);
-	while ((rr = read(fd, &rb, 8)) > 0)
+//ft_printf("%s", CLEAR);
+ft_putstr_fd(CLEAR, STDERR_FILENO);
+	ft_print_forward(g_attr.args);
+	while ((rr = read(STDIN_FILENO, &rb, 8)) > 0)
 	{
 		//ft_printf("[ %lld ]\n", rb);
 		if (rb == K_DOWN)
@@ -51,12 +55,14 @@ ft_print_forward(g_attr.args);
 				ptr = ft_del_elem(ptr);
 			ptr->modes |= (M_CRSR);
 		}
-		else if ((int)rb == K_ENTER)
+		else if (rb == K_ENTER)
 		{
 			ft_print_selected(g_attr.args);
-			return g_attr.args;
+			//return g_attr.args;
+			return;
 		}
-		ft_printf("%s", CLEAR);
+		//ft_printf("%s", CLEAR);
+		ft_putstr_fd(CLEAR, STDERR_FILENO);
 		ft_print_forward(g_attr.args);
 		rb = 0;
 	}
