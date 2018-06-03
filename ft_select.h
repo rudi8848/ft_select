@@ -25,6 +25,7 @@
 # define M_NORM		0
 # define M_SLCT		1
 # define M_CRSR		2
+# define M_DIR		4
 
 # define S_NORM		"\033[0m"
 # define S_SLCT		"\033[7m"
@@ -43,6 +44,12 @@
 #define K_DELETE	2117294875L
 #define K_BSPACE	127
 
+# define RED 		"\033[0;31m"
+# define GREEN 		"\033[0;32m"
+# define YELLOW		"\033[0;33m"
+# define BLUE		"\033[0;34m"
+# define MAGENTA	"\033[0;35m"
+# define CYAN		"\033[1;36m"
 
 
 
@@ -51,6 +58,7 @@ typedef struct s_dslist
 	char	*name;
 	size_t	len;
 	int		modes;
+	char	*color;
 	struct  s_dslist *prev;
 	struct  s_dslist *next;
 } t_dslist;

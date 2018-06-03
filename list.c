@@ -12,6 +12,31 @@
 
 #include "ft_select.h"
 
+void		ft_set_fields(t_dslist *lst, char *name)
+{
+	int				ret;
+	struct stat		buf;
+
+	lst->modes = 0;
+	ret = lstat(name, &buf);
+	if (ret >= 0)
+	{
+		if (S_ISDIR(buf.st_mode))
+		{
+			lst->modes |= M_DIR;
+			lst->color = CYAN;
+		}
+		else
+			lst->color = BLUE;
+	}
+	else
+		lst->color = "";
+	return (0);
+
+	lst->name = ft_strdup(name);
+	lst->len = ft_strlen(name);
+}
+
 t_dslist	*ft_init_list(char *name)
 {
 	t_dslist	*lst;
@@ -19,9 +44,10 @@ t_dslist	*ft_init_list(char *name)
 	lst = (t_dslist*)ft_memalloc(sizeof(t_dslist));
 	if (!lst)
 		return (NULL);
-	lst->name = ft_strdup(name);
-	lst->len = ft_strlen(name);
-	lst->modes = 0;
+	//lst->name = ft_strdup(name);
+	//lst->len = ft_strlen(name);
+	ft_set_fields(lst, name);
+	//lst->modes = 0;
 	lst->next = lst;
 	lst->prev = lst;
 	return (lst);
@@ -39,8 +65,9 @@ t_dslist	*ft_addelem(t_dslist *lst, char *name)
 	lst->next = temp;
 	//printf("--> add [%s]\n", name);
 	//sleep(1);
-	temp->name = ft_strdup(name);
-	temp->len = ft_strlen(name);
+	//temp->name = ft_strdup(name);
+	//temp->len = ft_strlen(name);
+	ft_set_fields(temp, name);
 	temp->next = ptr;
 	temp->prev = lst;
 	ptr->prev = temp;
