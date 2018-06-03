@@ -37,6 +37,8 @@ t_dslist	*ft_addelem(t_dslist *lst, char *name)
 		return (NULL);
 	ptr = lst->next;
 	lst->next = temp;
+	//printf("--> add [%s]\n", name);
+	//sleep(1);
 	temp->name = ft_strdup(name);
 	temp->len = ft_strlen(name);
 	temp->next = ptr;
