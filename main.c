@@ -1,4 +1,4 @@
-gi#include "ft_select.h"
+#include "ft_select.h"
 
 void	ft_check_terminal(void)
 {
