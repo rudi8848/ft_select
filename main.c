@@ -1,4 +1,4 @@
-#include "ft_select.h"
+gi#include "ft_select.h"
 
 void	ft_check_terminal(void)
 {
@@ -19,6 +19,21 @@ void	ft_check_terminal(void)
 	}
 }
 
+void	ft_get_winsize(void)
+{
+	struct winsize 	argp;
+	int 			ret;
+
+	ret = ioctl(STDIN_FILENO, TIOCGWINSZ, &argp);
+	if (ret != 0)
+	{
+		ft_putstr_fd("Cannot get window size\n", STDERR_FILENO);
+		ft_exit();
+	}
+	g_attr.width = argp.ws_col;
+	g_attr.height = argp.ws_row;
+}
+
 void	ft_init_attr(void)
 {
 	struct termios	buf;
@@ -31,6 +46,7 @@ void	ft_init_attr(void)
 		exit(EXIT_FAILURE);
 	}
 	g_attr.def_settings = buf;
+	ft_get_winsize();
 	buf.c_lflag &= ~(ECHO | ICANON);
 	buf.c_cc[VMIN] = 1;
 	buf.c_cc[VTIME] = 0;

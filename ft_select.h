@@ -69,6 +69,8 @@ typedef struct s_data
 {
 	struct termios def_settings;
 	struct termios cur_settings;
+	int				width;
+	int				height;
 	t_dslist *args;
 } t_data;
 
