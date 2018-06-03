@@ -42,7 +42,14 @@
 #define K_DELETE	2117294875L
 #define K_BSPACE	127
 
-struct termios g_cpattr;
+t_data	g_attr;
+
+typedef struct s_data
+{
+	struct termios def_settings;
+	struct termios cur_settings;
+	t_dslist *args;
+} t_data;
 
 typedef struct s_dslist
 {
@@ -57,6 +64,8 @@ t_dslist	*ft_init_list(char *name);
 t_dslist	*ft_addelem(t_dslist *lst, char *name);
 t_dslist	*ft_del_elem(t_dslist *lst);
 void		ft_del_list(t_dslist *lst);
+void		ft_set_signals(void);
+void		ft_restore_settings(void);
 
 
 void	ft_print_forward(t_dslist *lst);
