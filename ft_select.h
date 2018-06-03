@@ -83,6 +83,7 @@ void		ft_set_signals(void);
 void		ft_restore_settings(void);
 void		ft_processing(void);
 void		ft_exit(void);
+void		ft_get_winsize(void);
 
 void	ft_print_forward(t_dslist *lst);
 void		test_termcap(void);

@@ -24,7 +24,8 @@ void		ft_int_handler(int signum)
 
 void		ft_winch_handler(int signum)
 {
-	;
+	ft_get_winsize();
+	ft_print_forward(g_attr.args);
 }
 
 void		ft_count_handler(int signum)
