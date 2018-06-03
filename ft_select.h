@@ -16,6 +16,8 @@
 # include "libft/includes/libft.h"
 # include "libft/includes/ft_printf.h"
 # include <sys/ioctl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <termios.h>
 # include <fcntl.h>
 #include <curses.h>
@@ -45,11 +47,11 @@
 #define K_BSPACE	127
 
 # define RED 		"\033[0;31m"
-# define GREEN 		"\033[0;32m"
+# define GREEN 		"\033[1;32m"
 # define YELLOW		"\033[0;33m"
 # define BLUE		"\033[0;34m"
 # define MAGENTA	"\033[0;35m"
-# define CYAN		"\033[1;36m"
+# define CYAN		"\033[0;36m"
 
 
 

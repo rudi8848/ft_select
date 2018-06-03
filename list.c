@@ -18,23 +18,28 @@ void		ft_set_fields(t_dslist *lst, char *name)
 	struct stat		buf;
 
 	lst->modes = 0;
+	lst->name = ft_strdup(name);
+	lst->len = ft_strlen(name);
 	ret = lstat(name, &buf);
 	if (ret >= 0)
 	{
 		if (S_ISDIR(buf.st_mode))
 		{
 			lst->modes |= M_DIR;
-			lst->color = CYAN;
+			lst->color = GREEN;
 		}
+		/*else if (name[lst->len - 2] == '.' && name[lst->len - 1] == 'o')
+			lst->color = YELLOW;
+		else if (name[lst->len - 2] == '.' && name[lst->len - 1] == 'c')
+			lst->color = CYAN;*/
+		else if (S_IXUSR & buf.st_mode)
+			lst->color = RED;
 		else
 			lst->color = BLUE;
 	}
 	else
 		lst->color = "";
-	return (0);
 
-	lst->name = ft_strdup(name);
-	lst->len = ft_strlen(name);
 }
 
 t_dslist	*ft_init_list(char *name)
@@ -93,6 +98,7 @@ void	ft_print_forward(t_dslist *lst)
 	t_dslist	*ptr;
 
 	ptr = lst;
+		ft_putstr_fd(ptr->color, STDERR_FILENO);
 	if (ptr->modes & M_CRSR && ptr->modes & M_SLCT)
 		ft_putstr_fd(S_SLCRS, STDERR_FILENO);
 		//ft_printf("%s%s%s\n", S_SLCRS, ptr->name, S_NORM);
@@ -121,6 +127,7 @@ void	ft_print_forward(t_dslist *lst)
 		else
 			ft_printf("%s\n", ptr->name);
 		//ft_printf("%s%s%s\n", (ptr->modes & M_CRSR) ? S_CRSR : "", ptr->name, S_NORM);*/
+		ft_putstr_fd(ptr->color, STDERR_FILENO);
 	if (ptr->modes & M_CRSR && ptr->modes & M_SLCT)
 		ft_putstr_fd(S_SLCRS, STDERR_FILENO);
 		//ft_printf("%s%s%s\n", S_SLCRS, ptr->name, S_NORM);
