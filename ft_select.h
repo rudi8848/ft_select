@@ -74,7 +74,18 @@ typedef struct s_data
 	t_dslist *args;
 } t_data;
 
+
+typedef struct s_printp
+{
+	int 	total;
+	int 	col_width;
+	int 	cols;
+	int 	rows;
+} t_printp;
+
 t_data	g_attr;
+
+
 t_dslist	*ft_init_list(char *name);
 t_dslist	*ft_addelem(t_dslist *lst, char *name);
 t_dslist	*ft_del_elem(t_dslist *lst);
