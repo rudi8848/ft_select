@@ -32,8 +32,8 @@ void	ft_get_winsize(void)
 	}
 	g_attr.width = argp.ws_col;
 	g_attr.height = argp.ws_row;
-	printf("---> %s width: [%d], height: [%d]\n", __FUNCTION__, g_attr.width, g_attr.height);
-	sleep(1);
+	//printf("---> %s width: [%d], height: [%d]\n", __FUNCTION__, g_attr.width, g_attr.height);
+	//sleep(1);
 }
 
 void	ft_init_attr(void)

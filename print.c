@@ -65,15 +65,17 @@ t_printp 	ft_get_params(t_dslist *lst)
 	res.col_width = ft_maxlen(lst) + 1;
 	res.cols = g_attr.width / res.col_width;
 	if (!res.cols)
-	{
+		res.cols = 1;
+	/*{
 		ft_putstr_fd("No space to output\n", STDERR_FILENO);
 		ft_exit();
-	}
-	res.rows = res.total / res.cols;
+	}*/
+	/*res.rows = res.total / res.cols;
 	if (!res.rows)
 		res.rows = 1;
 	else if (res.total % res.cols)
 		res.rows++;
+		*/
 	return (res);
 }
 
@@ -100,37 +102,25 @@ void	ft_print_forward(t_dslist *lst)
 {
 	t_dslist	*ptr;
 	t_printp	curp;
-	int 		c;
-	int 		r;
-	int 		j;
+	int i = 0;
+	int j;
 
 	ptr = lst;
 	curp = ft_get_params(lst);
-	c = 0;
-	r = 0;
-
-	while (c < curp.total && r < curp.rows)
+	while (i < curp.total)
 	{
 		j = 0;
-		while (j < curp.cols)
+		while (j < curp.cols && i + j < curp.total)
 		{
-			if ((c * r + j) < curp.total)
+			if ((i + j) < curp.total)
 			{
-				ptr = ft_get_nth(lst, c * r + j);
+				ptr = ft_get_nth(lst, i + j);
 				ft_print_elem(ptr, curp.col_width);
 			}
 			j++;
+			
 		}
-		r++;
+		i += j;
 		ft_putchar_fd('\n', STDERR_FILENO);
-		c += curp.cols;
 	}
-	/*
-	ft_print_elem(ptr);
-	ptr = lst->next;
-	while (ptr != lst)
-	{
-		ft_print_elem(ptr);
-		ptr = ptr->next;
-	}*/
 }

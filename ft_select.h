@@ -80,7 +80,7 @@ typedef struct s_printp
 	int 	total;
 	int 	col_width;
 	int 	cols;
-	int 	rows;
+	//int 	rows;
 } t_printp;
 
 t_data	g_attr;
