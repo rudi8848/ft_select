@@ -25,7 +25,7 @@ void	ft_processing(void)
 	uint64_t rb;
 	t_dslist *ptr = g_attr.args;
 //ft_printf("%s", CLEAR);
-ft_putstr_fd(CLEAR, STDERR_FILENO);
+	ft_putstr_fd(CLEAR, STDERR_FILENO);
 	ft_print_forward(g_attr.args);
 	while ((rr = read(STDIN_FILENO, &rb, 8)) > 0)
 	{
