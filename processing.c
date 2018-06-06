@@ -24,23 +24,35 @@ void	ft_processing(void)
 	int rr;
 	uint64_t rb;
 	t_dslist *ptr = g_attr.args;
-//ft_printf("%s", CLEAR);
+	t_printp param;
+	rb = 0;
 	ft_putstr_fd(CLEAR, STDERR_FILENO);
-	ft_print_forward(g_attr.args);
+	ft_print_forward(ptr);
+	param = ft_get_params(g_attr.args);
 	while ((rr = read(STDIN_FILENO, &rb, 8)) > 0)
 	{
-		//ft_printf("[ %lld ]\n", rb);
-		if (rb == K_DOWN)
+		if (rb == K_RIGHT)
 		{
 			ptr->modes &= ~(M_CRSR);
 			ptr = ptr->next;
 			ptr->modes |= (M_CRSR);
 		}
-		else if (rb == K_UP)
+		else if (rb == K_LEFT)
 		{
 			ptr->modes &= ~(M_CRSR);
 			ptr = ptr->prev;
 			ptr->modes |= (M_CRSR);
+		}
+		else if (rb == K_DOWN)
+		{
+			ptr->modes &= ~(M_CRSR);
+			ptr = ft_get_nth(ptr, param.cols);
+			ptr->modes |= (M_CRSR);	
+		}
+		else if (rb == K_UP)
+		{
+			ptr->modes &= ~(M_CRSR);
+		
 		}
 		else if (rb == K_SPACE)
 		{

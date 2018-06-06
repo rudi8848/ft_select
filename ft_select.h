@@ -96,6 +96,8 @@ void		ft_processing(void);
 void		ft_exit(void);
 void		ft_get_winsize(void);
 
+t_printp 	ft_get_params(t_dslist *lst);
+t_dslist			*ft_get_nth(t_dslist *head, int n);
 void	ft_print_forward(t_dslist *lst);
 void		test_termcap(void);
 #endif
