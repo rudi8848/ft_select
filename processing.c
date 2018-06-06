@@ -93,7 +93,8 @@ void	ft_processing(void)
 		else if (rb == K_ENTER)
 		{
 			ft_print_selected(g_attr.args);
-			return;
+			break;
+			//return;
 		}
 		else if (rb == K_ESC)
 			ft_exit();
