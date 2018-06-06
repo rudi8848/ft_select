@@ -88,8 +88,15 @@ t_dslist	*ft_del_elem(t_dslist *lst)
 	next = lst->next;
 	prev->next = lst->next;
 	next->prev = lst->prev;
+	/*if (lst->prev == lst->next)
+	{
+		free(lst->name);
+		free(lst);
+		return (NULL);
+	}*/
 	free(lst->name);
 	free(lst);
+
 	return (prev);
 }
 

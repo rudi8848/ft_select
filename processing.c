@@ -43,7 +43,7 @@ void	ft_move_v(t_dslist **ptr, uint64_t direction)
 	}
 	else if (direction == K_UP)
 	{
-		(*ptr) = ft_get_nth((*ptr), param.cols % n);
+		(*ptr) = ft_get_nth((*ptr), n - param.cols);
 	}
 	(*ptr)->modes |= (M_CRSR);
 }
@@ -73,8 +73,22 @@ void	ft_processing(void)
 		else if (rb == K_DELETE || rb == K_BSPACE)
 		{
 			if (ptr != g_attr.args)
+			{
 				ptr = ft_del_elem(ptr);
-			ptr->modes |= (M_CRSR);
+				ptr->modes |= (M_CRSR);
+			}
+			else if (ptr == g_attr.args && g_attr.args != g_attr.args->next)
+			{
+				ptr = ft_del_elem(ptr);
+				ptr = ptr->next;
+				g_attr.args = g_attr.args->next;
+				ptr->modes |= (M_CRSR);
+			}
+			else
+			{
+				ft_putstr_fd(CLEAR, STDERR_FILENO);
+				ft_exit();
+			}
 		}
 		else if (rb == K_ENTER)
 		{
@@ -83,7 +97,6 @@ void	ft_processing(void)
 		}
 		else if (rb == K_ESC)
 			ft_exit();
-		//ft_printf("%s", CLEAR);
 		ft_putstr_fd(CLEAR, STDERR_FILENO);
 		ft_print_forward(g_attr.args);
 		rb = 0;
