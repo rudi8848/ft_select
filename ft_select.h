@@ -95,6 +95,7 @@ void		ft_restore_settings(void);
 void		ft_processing(void);
 void		ft_exit(void);
 void		ft_get_winsize(void);
+int			ft_count_elem(t_dslist *lst);
 
 t_printp 	ft_get_params(t_dslist *lst);
 t_dslist			*ft_get_nth(t_dslist *head, int n);
