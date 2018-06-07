@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   processing.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gvynogra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/07 10:43:52 by gvynogra          #+#    #+#             */
+/*   Updated: 2018/06/07 10:45:26 by gvynogra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_select.h"
 
-void		ft_print_selected(t_dslist *lst)
+static void		ft_print_selected(t_dslist *lst)
 {
 	t_dslist *ptr;
 
 	ptr = lst;
-//	ft_printf("%s", CLEAR);
-ft_putstr_fd(CLEAR, STDERR_FILENO);
+	ft_putstr_fd(CLEAR, STDERR_FILENO);
 	if (ptr->modes & M_SLCT)
 		ft_printf("%s ", ptr->name);
 	ptr = ptr->next;
@@ -19,7 +30,7 @@ ft_putstr_fd(CLEAR, STDERR_FILENO);
 	ft_putchar('\n');
 }
 
-void	ft_move_h(t_dslist **ptr, uint64_t direction)
+static void		ft_move_h(t_dslist **ptr, uint64_t direction)
 {
 	(*ptr)->modes &= ~(M_CRSR);
 	if (direction == K_RIGHT)
@@ -29,11 +40,11 @@ void	ft_move_h(t_dslist **ptr, uint64_t direction)
 	(*ptr)->modes |= (M_CRSR);
 }
 
-void	ft_move_v(t_dslist **ptr, uint64_t direction)
+static void		ft_move_v(t_dslist **ptr, uint64_t direction)
 {
-	t_printp param;
-	int	n;
-	
+	t_printp	param;
+	int			n;
+
 	param = ft_get_params(g_attr.args);
 	n = ft_count_elem(*ptr);
 	(*ptr)->modes &= ~(M_CRSR);
@@ -48,14 +59,35 @@ void	ft_move_v(t_dslist **ptr, uint64_t direction)
 	(*ptr)->modes |= (M_CRSR);
 }
 
-void	ft_processing(void)
+static void		ft_delete_active(t_dslist **ptr)
 {
-	int rr;
-	uint64_t rb;
-	t_dslist *ptr = g_attr.args;
-	
+	if ((*ptr) != g_attr.args)
+	{
+		(*ptr) = ft_del_elem((*ptr));
+		(*ptr)->modes |= (M_CRSR);
+	}
+	else if ((*ptr) == g_attr.args && g_attr.args != g_attr.args->next)
+	{
+		(*ptr) = ft_del_elem((*ptr));
+		(*ptr) = (*ptr)->next;
+		g_attr.args = g_attr.args->next;
+		(*ptr)->modes |= (M_CRSR);
+	}
+	else
+	{
+		ft_putstr_fd(CLEAR, STDERR_FILENO);
+		ft_exit();
+	}
+}
+
+void			ft_processing(void)
+{
+	int			rr;
+	uint64_t	rb;
+	t_dslist	*ptr;
+
+	ptr = g_attr.args;
 	rb = 0;
-	ft_putstr_fd(CLEAR, STDERR_FILENO);
 	ft_print_forward(ptr);
 	while ((rr = read(STDIN_FILENO, &rb, 8)) > 0)
 	{
@@ -64,40 +96,13 @@ void	ft_processing(void)
 		else if (rb == K_DOWN || rb == K_UP)
 			ft_move_v(&ptr, rb);
 		else if (rb == K_SPACE)
-		{
-			if (! (ptr->modes & M_SLCT))
-				ptr->modes |= M_SLCT;
-			else
-				ptr->modes &= ~(M_SLCT);
-		}
+			ft_switch_mode(ptr, M_SLCT);
 		else if (rb == K_DELETE || rb == K_BSPACE)
-		{
-			if (ptr != g_attr.args)
-			{
-				ptr = ft_del_elem(ptr);
-				ptr->modes |= (M_CRSR);
-			}
-			else if (ptr == g_attr.args && g_attr.args != g_attr.args->next)
-			{
-				ptr = ft_del_elem(ptr);
-				ptr = ptr->next;
-				g_attr.args = g_attr.args->next;
-				ptr->modes |= (M_CRSR);
-			}
-			else
-			{
-				ft_putstr_fd(CLEAR, STDERR_FILENO);
-				ft_exit();
-			}
-		}
+			ft_delete_active(&ptr);
 		else if (rb == K_ENTER)
-		{
-			ft_print_selected(g_attr.args);
-			return;
-		}
+			return (ft_print_selected(g_attr.args));
 		else if (rb == K_ESC)
 			ft_exit();
-		ft_putstr_fd(CLEAR, STDERR_FILENO);
 		ft_print_forward(g_attr.args);
 		rb = 0;
 	}
