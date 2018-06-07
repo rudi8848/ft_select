@@ -34,6 +34,7 @@
 # define S_CRSR		"\033[4m"
 # define S_SLCRS	"\033[7;4m"
 # define CLEAR		"\033[1;1H\e[2J"
+# define SUSPEND	"\032"
 
 #define K_LEFT		4479771
 #define K_RIGHT		4414235

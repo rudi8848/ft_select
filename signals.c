@@ -16,7 +16,7 @@ void		ft_tstp_handler(int signum)
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_attr.def_settings);
 	signal(SIGTSTP, SIG_DFL);
-	ioctl(STDERR_FILENO, TIOCSTI, "\x1A");
+	ioctl(STDERR_FILENO, TIOCSTI, SUSPEND);
 }
 
 void		ft_int_handler(int signum)
@@ -44,9 +44,10 @@ void		ft_set_signals(void)
 		signal(SIGTSTP, ft_tstp_handler);
 		signal(SIGCONT, ft_cont_handler);	
 		signal(SIGINT, ft_int_handler);	
+		signal(SIGTERM, ft_int_handler);	
 		signal(SIGABRT, ft_int_handler);	
 		signal(SIGQUIT, ft_int_handler);
 		//signal(SIGSTOP, ft_stp_handler);	
 		signal(SIGWINCH, ft_winch_handler);	
-		signal(SIGKILL, ft_int_handler);	
+		//signal(SIGKILL, ft_int_handler);	
 }
