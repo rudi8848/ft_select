@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "includes/ft_select.h"
 
 void	ft_switch_mode(t_dslist *ptr, int mode)
 {
@@ -39,4 +39,11 @@ int		ft_maxlen(t_dslist *lst)
 		ptr = ptr->next;
 	}
 	return (max);
+}
+
+void	ft_exit(void)
+{
+	ft_restore_settings();
+	ft_del_list(g_attr.args);
+	exit(EXIT_SUCCESS);
 }

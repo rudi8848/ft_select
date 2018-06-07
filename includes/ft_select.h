@@ -12,8 +12,8 @@
 
 #ifndef FT_SELECT_H
 # define FT_SELECT_H
-# include "libft/includes/libft.h"
-# include "libft/includes/ft_printf.h"
+# include "../libft/includes/libft.h"
+# include "../libft/includes/ft_printf.h"
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -36,11 +36,11 @@
 # define SUSPEND	"\032"
 
 # define K_LEFT		4479771
-# define K_RIGHT		4414235
+# define K_RIGHT	4414235
 # define K_UP		4283163
 # define K_DOWN		4348699
 
-# define K_ENTER		10
+# define K_ENTER	10
 # define K_SPACE 	32
 # define K_ESC		27
 # define K_DELETE	2117294875L
@@ -48,10 +48,7 @@
 
 # define RED 		"\033[0;31m"
 # define GREEN 		"\033[1;32m"
-# define YELLOW		"\033[0;33m"
 # define BLUE		"\033[0;34m"
-# define MAGENTA	"\033[0;35m"
-# define CYAN		"\033[0;36m"
 
 typedef struct		s_dslist
 {
@@ -84,6 +81,7 @@ t_data	g_attr;
 t_dslist			*ft_init_list(char *name);
 t_dslist			*ft_addelem(t_dslist *lst, char *name);
 t_dslist			*ft_del_elem(t_dslist *lst);
+t_dslist			*ft_get_nth(t_dslist *head, int n);
 void				ft_del_list(t_dslist *lst);
 void				ft_set_signals(void);
 void				ft_restore_settings(void);
@@ -93,7 +91,6 @@ void				ft_get_winsize(void);
 int					ft_count_elem(t_dslist *lst);
 void				ft_switch_mode(t_dslist *ptr, int mode);
 t_printp			ft_get_params(t_dslist *lst);
-t_dslist			*ft_get_nth(t_dslist *head, int n);
 void				ft_print_forward(t_dslist *lst);
-void				test_termcap(void);
+int					ft_maxlen(t_dslist *lst);
 #endif

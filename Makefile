@@ -1,10 +1,9 @@
 NAME = ft_select
-#SRCS = list.c keys.c signals.c exit.c termcap.c main.c
-SRCS = list.c signals.c exit.c main.c processing.c print.c help_funcs.c
+SRCS = list.c signals.c main.c processing.c print.c help_funcs.c
 LIB = libft/libft.a
 OBJ = $(SRCS:.c=.o)
 CFLAGS = -Wall -Wextra -Werror -ltermcap
-HDRS = ft_select.h
+HDRS = includes/ft_select.h
 
 all:	$(NAME)
 

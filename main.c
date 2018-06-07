@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "includes/ft_select.h"
 
 static void	ft_check_terminal(void)
 {
